@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>MathWiz</title>
+  </head>
+  <body onload="startTimer()">
+    <center id="timer"></center>
+    <div id="question-container">
+      <div id="question"></div>
+      <input type="text" id="answer" />
+    </div>
+
+    <button onclick="checkAnswer()" class="nextBtn">Next</button>
+
+    <div class="details">
+      <p class="message">🏁📣Start Playing</p>
+      <div id="score">💯Score: 0</div>
+      <p id="tries">💊Tries left: 3</p>
+      <div id="high-score-container">
+        👌High Score: <span id="high-score"></span>
+      </div>
+    </div>
+
+    <div id="result"></div>
+    <script src="script.js"></script>
+  </body>
+</html>

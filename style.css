@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap');
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+html {
+  font-size: 62.5%;
+  box-sizing: border-box;
+  height: 100%;
+}
+body {
+  font-family: 'Press Start 2P', sans-serif;
+  color: #eee;
+  background-color: #011627;
+  overflow: hidden;
+  height: 100vh;
+}
+#timer {
+  display: block;
+  padding: 20px;
+  background-color: #1d81af;
+  font-size: 6vh;
+  border-radius: 5px;
+  border-bottom: 5px solid #fff;
+}
+#question-container {
+  display: flex;
+  justify-content: space-evenly;
+  padding-top: 10em;
+}
+
+#question {
+  font-size: 5.875rem;
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
+  padding: 60px 5px;
+  
+}
+#answer {
+  width: 18rem;
+  height: 18rem;
+  border-radius: 10px;
+  font-size: 3.125rem;
+  text-align: center;
+  display: inline-block;
+  vertical-align: middle;
+  font-family: 'Press Start 2P', sans-serif;
+}
+
+.nextBtn {
+  clear: both;
+  float: right;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 20px;
+  margin-top: 20px;
+  text-align: center;
+  background: #1d81af;
+  font-weight: bold;
+  cursor: pointer;
+  color: #fff;
+  outline: none;
+  border: none;
+  margin-top: 100px;
+  margin-right: 50px;
+}
+.nextBtn:hover {
+  background: #000;
+  color: #fff;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 20px;
+  font-size: 2rem;
+  padding-top: 10px;
+  margin-left: 20px;
+}
+
