@@ -1,4 +1,8 @@
 let operand1, operand2, operator, result, score, interval, highScore;
+const nextButton = document.getElementById('next-button');
+const input = document.getElementById('input-field');
+
+
 
 //generate random operand and operator
 function generateQuestion() {
@@ -56,27 +60,61 @@ function flashColor(color) {
 }
 
 //highscore
+let gameEnded = false;
 // Save the high score to local storage
 function setHighScore(score) {
   localStorage.setItem('highScore', score);
 }
 // Get the high score from local storage
 function getHighScore() {
-  return Number(localStorage.getItem('highScore')) || 0;
+  return localStorage.getItem('highScore');
 }
 
 function updateHighScore(score) {
- let  highScore = getHighScore();
-  if ( score > highScore) {
+  if (!gameEnded) {
+    return;
+  }
+  let highScore = getHighScore();
+  if (score > highScore) {
     setHighScore(score);
-    document.getElementById('high-score').innerHTML = highScore;
+    document.getElementById('high-score').innerHTML = score;
   }
 }
+function endGame() {
+  gameEnded = true;
+}
+// retrieve the high score at the start of each new game
+let startingScore = getHighScore();
+if (startingScore === null) {
+  startingScore = 0;
+} else {
+  startingScore = Number(startingScore);
+}
+//Read Out Results
+const SpeechSynthesisUtterance =
+  window.speechSynthesis.SpeechSynthesisUtterance;
 
+function speak(text) {
+  const utterance = new SpeechSynthesisUtterance(text);
+  window.speechSynthesis.speak(utterance);
+}
+
+let speech = new window.SpeechSynthesisUtterance();
+// Get the list of available voices
+let voices = window.speechSynthesis.getVoices();
+
+// Find the index of the desired voice in the list of voices
+let femaleVoiceIndex = voices.findIndex(
+  voice => voice.name === 'Google UK English Female'
+);
+
+// Set the voice using its index
+speech.voice = voices[femaleVoiceIndex];
 //check user input
 let incorrectAnswers = 0;
 
 function checkAnswer() {
+  document.getElementById('high-score').innerHTML = startingScore;
   let time = parseInt(
     document.getElementById('timer').innerHTML.split(' ')[2].split('s')[0]
   );
@@ -84,16 +122,27 @@ function checkAnswer() {
     displayMessage('⌛Time is up! You can no longer answer questions.');
     document.querySelector('body').style.bacgroundColor = 'darkred';
     // Update high score after game ends
+    speech.voice = voices[femaleVoiceIndex];
+    speech.text = 'Time is up! You can no longer answer questions.';
+    speech.lang = 'en-US';
+    speech.rate = 3;
+    speechSynthesis.speak(speech);
+    endGame();
 
     return;
   }
 
   let answer = parseInt(document.getElementById('answer').value);
-  highScore= getHighScore()
-  document.getElementById('high-score').innerHTML= highScore
-  if (!answer) {
+  highScore = getHighScore(score);
+  document.getElementById('high-score').innerHTML = highScore;
+  if (!answer || !Number(answer)) {
     displayMessage('⛔No number! Insert a Number');
     flashColor('#333');
+    speech.voice = voices[femaleVoiceIndex];
+    speech.text = 'No number! Insert a Number';
+    speech.lang = 'en-US';
+    speech.rate = 3;
+    speechSynthesis.speak(speech);
     return;
   }
 
@@ -102,14 +151,29 @@ function checkAnswer() {
     document.getElementById('score').innerHTML = 'Score: ' + score;
     displayMessage('👏Correct, Keep going!');
     flashColor('green');
-    document.getElementById('answer').value = '';
     generateQuestion();
-    updateHighScore(score);
+    document.getElementById('answer').value = '';
+    document.getElementById('answer').focus();
+
+    // updateHighScore(score);
+
+    speech.voice = voices[femaleVoiceIndex];
+    speech.voiceURI = 'Google UK English Female';
+    speech.text = 'Correct, Keep going!';
+    speech.lang = 'en-US';
+    speech.rate = 3;
+    speechSynthesis.speak(speech);
   } else {
     incorrectAnswers++;
     document.getElementById('tries').innerHTML =
       'Tries left: ' + (3 - incorrectAnswers);
     flashColor('darkred');
+    displayMessage('☹🤦‍♂️ Oops, try again!');
+    speech.voice = voices[femaleVoiceIndex];
+    speech.text = 'Oops, try again';
+    speech.lang = 'en-US';
+    speech.rate = 3;
+    speechSynthesis.speak(speech);
 
     if (incorrectAnswers >= 3) {
       if (incorrectAnswers >= 3) {
@@ -117,19 +181,31 @@ function checkAnswer() {
         document.getElementById('tries').innerHTML =
           'You have exceeded the maximum number of allowed incorrect answers. ';
 
-        clearInterval(interval);
         displayMessage('💥You Lost  the game.');
         // Update high score after game ends
         document.querySelector('body').style.backgroundColor = 'darkred';
-        updateHighScore(score);
+        // updateHighScore(score);
+        endGame()
+        updateHighScore(score)
+        speech.voice = voices[femaleVoiceIndex];
+        speech.text = 'You Lost  the game';
+        speech.lang = 'en-Us';
+        speech.rate = 3;
+        speechSynthesis.speak(speech);
         return;
       }
 
-      clearInterval(interval);
-      displayMessage('💥You Lost  the game.');
-      flashColor('darkred');
-      // Update high score after game ends
-      updateHighScore(score);
+      // clearInterval(interval);
+      // displayMessage('💥You Lost  the game.');
+      // flashColor('darkred');
+      // // Update high score after game ends
+      // updateHighScore(score);
+      // speech.voice = voices[femaleVoiceIndex];
+      // speech.text = 'You Lost  the game';
+      // speech.lang = 'en-US';
+      // speech.rate = 3;
+      // speechSynthesis.speak(speech);
+
       return;
     }
   }
@@ -148,6 +224,14 @@ function startTimer() {
       clearInterval(interval);
       displayMessage('⌛Time is up! Your score is ' + score);
       document.querySelector('body').style.backgroundColor = 'darkred';
+      updateHighScore(score);
+      document.getElementById('high-score').innerHTML = score;
+      speech.voice = voices[femaleVoiceIndex];
+      speech.text = 'Time is up! Your score is ' + score;
+      speech.lang = 'en-US';
+      speech.rate = 3;
+      speechSynthesis.speak(speech);
+      endGame();
       // Update high score after game ends
     } else {
       document.getElementById('timer').innerHTML =
@@ -161,7 +245,7 @@ setTimeout(function () {
   document.querySelector('#timer').style.color = 'darkred';
 }, 50400);
 
-// ...
+//Basic styling from dom
 
 document.getElementById('question').style.display = 'inline-flex';
 document.getElementById('question').style.justifyContent = 'center';
@@ -184,3 +268,5 @@ document.getElementById('question').appendChild(operand1);
 document.getElementById('question').appendChild(operator);
 document.getElementById('question').appendChild(operand2);
 document.getElementById('question').innerHTML += ' = ';
+
+// //Make enter button perform same task as next button
