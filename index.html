@@ -13,16 +13,24 @@
       <div id="question"></div>
       <input type="text" id="answer" />
     </div>
-
-    <button onclick="checkAnswer()" class="nextBtn">Next</button>
+    <div class="gameLog">
+    <div>
+      <button onclick="checkAnswer()" class="nextBtn">Next</button>
+    </div>
 
     <div class="details">
-      <p class="message">🏁📣Start Playing</p>
-      <div id="score">💯Score: 0</div>
-      <p id="tries">💊Tries left: 3</p>
+      <p class="message">🏁 Start Playing</p>
+      <div id="score">💯 Score: 0</div>
+      <p id="tries">💊 Tries left: 3</p>
       <div id="high-score-container">
-        👌High Score: <span id="high-score"></span>
+        👌 High Score: <span id="high-score"></span>
       </div>
+    </div>
+    <div>
+      <a href="javascript:location.reload(true)" class="refresh"
+        ><img src="./img/icons8-restart-80.png" alt=""
+      /></a>
+    </div>
     </div>
 
     <div id="result"></div>

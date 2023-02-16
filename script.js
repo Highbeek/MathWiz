@@ -2,8 +2,6 @@ let operand1, operand2, operator, result, score, interval, highScore;
 const nextButton = document.getElementById('next-button');
 const input = document.getElementById('input-field');
 
-
-
 //generate random operand and operator
 function generateQuestion() {
   operand1 = Math.floor(Math.random() * 10) + 1;
@@ -115,6 +113,7 @@ let incorrectAnswers = 0;
 
 function checkAnswer() {
   document.getElementById('high-score').innerHTML = startingScore;
+
   let time = parseInt(
     document.getElementById('timer').innerHTML.split(' ')[2].split('s')[0]
   );
@@ -185,8 +184,8 @@ function checkAnswer() {
         // Update high score after game ends
         document.querySelector('body').style.backgroundColor = 'darkred';
         // updateHighScore(score);
-        endGame()
-        updateHighScore(score)
+        endGame();
+        updateHighScore(score);
         speech.voice = voices[femaleVoiceIndex];
         speech.text = 'You Lost  the game';
         speech.lang = 'en-Us';
@@ -270,3 +269,7 @@ document.getElementById('question').appendChild(operand2);
 document.getElementById('question').innerHTML += ' = ';
 
 // //Make enter button perform same task as next button
+//refresh game 
+function refresh() {
+   window.location.reload('Refresh');
+ }

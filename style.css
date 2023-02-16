@@ -1,3 +1,5 @@
+/* Default styles */
+
 @import url('https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap');
 * {
   margin: 0;
@@ -36,7 +38,6 @@ body {
   vertical-align: middle;
   text-align: center;
   padding: 60px 5px;
-  
 }
 #answer {
   width: 18rem;
@@ -47,6 +48,21 @@ body {
   display: inline-block;
   vertical-align: middle;
   font-family: 'Press Start 2P', sans-serif;
+}
+.gameLog {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+.gameLog :nth-child(1) {
+  order: 3;
+}
+.gameLog :nth-child(2) {
+  order: 2;
+}
+.gameLog :nth-child(3) {
+  order: 1;
 }
 
 .nextBtn {
@@ -64,8 +80,6 @@ body {
   color: #fff;
   outline: none;
   border: none;
-  margin-top: 100px;
-  margin-right: 50px;
 }
 .nextBtn:hover {
   background: #000;
@@ -73,12 +87,71 @@ body {
 }
 
 .details {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 20px;
+  line-height: 2;
   font-size: 2rem;
-  padding-top: 10px;
-  margin-left: 20px;
 }
 
+/* Media queries */
+
+@media screen and (max-width: 768px) {
+  /* Adjust the padding of question container and size of question font */
+  #question-container {
+    padding-top: 5em;
+  }
+  #question {
+    font-size: 4rem;
+    padding: 20px 5px;
+  }
+  #answer {
+    width: 14rem;
+    height: 14rem;
+    font-size: 2.5rem;
+  }
+  .nextBtn {
+    border: 2px solid #000;
+    position: absolute;
+    top: 300px;
+    z-index: 1;
+    left: 200px;
+  }
+  .details {
+    position: absolute;
+    z-index: 999;
+    font-size: 16px;
+    margin-left: 20px;
+    display: inline-block;
+    padding: 10px;
+    width: 400px;
+    line-height: 2;
+    top: 400px;
+    text-align: center;
+  }
+  #timer {
+    font-size: 16px;
+  }
+  .refresh {
+    position: absolute;
+    bottom: 0;
+    left: 80%;
+    top: 80%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  #timer {
+    font-size: 4vh;
+  }
+  #answer {
+    width: 12rem;
+    height: 12rem;
+    font-size: 2rem;
+  }
+  .nextBtn {
+    border: 2px solid yellow;
+  }
+  .refresh {
+    bottom: 0;
+    top: 80%;
+    left: 300px;
+  }
+}
