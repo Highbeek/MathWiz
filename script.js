@@ -1,3 +1,5 @@
+// 'use strict';
+
 let operand1, operand2, operator, result, score, interval, highScore;
 const nextButton = document.getElementById('next-button');
 const input = document.getElementById('input-field');
@@ -54,7 +56,7 @@ function flashColor(color) {
   document.body.style.backgroundColor = color;
   setTimeout(() => {
     document.body.style.backgroundColor = '#011627';
-  }, 0500);
+  }, 500);
 }
 
 //highscore
@@ -78,9 +80,34 @@ function updateHighScore(score) {
     document.getElementById('high-score').innerHTML = score;
   }
 }
+let soundPlayed = false;
+
+
+
 function endGame() {
+  // Check if the game has already ended
+  if (gameEnded) {
+    return;
+  }
+
   gameEnded = true;
+  const score = parseInt(
+    document.getElementById('score').textContent.split(': ')[1]
+  );
+
+  const message = `Hurray! Your final score is ${score}.`;
+  displayMessage(message);
+  document.querySelector('body').style.backgroundColor = 'darkgreen';
+
+  // Play the sound effect if it hasn't been played yet
+  const sound = new Audio('./sound/hurray.wav');
+  sound.play();
+
+  // Update the score display
+  document.getElementById('score').textContent = message;
 }
+
+
 // retrieve the high score at the start of each new game
 let startingScore = getHighScore();
 if (startingScore === null) {
@@ -194,17 +221,6 @@ function checkAnswer() {
         return;
       }
 
-      // clearInterval(interval);
-      // displayMessage('💥You Lost  the game.');
-      // flashColor('darkred');
-      // // Update high score after game ends
-      // updateHighScore(score);
-      // speech.voice = voices[femaleVoiceIndex];
-      // speech.text = 'You Lost  the game';
-      // speech.lang = 'en-US';
-      // speech.rate = 3;
-      // speechSynthesis.speak(speech);
-
       return;
     }
   }
@@ -213,6 +229,7 @@ function checkAnswer() {
 //start timer
 function startTimer() {
   score = 0;
+
   document.getElementById('timer').innerHTML = 'Time remaining: 60s';
 
   interval = setInterval(function () {
@@ -237,6 +254,7 @@ function startTimer() {
         'Time remaining: ' + (time - 1) + 's';
     }
   }, 1000);
+
   generateQuestion();
 }
 
@@ -269,7 +287,7 @@ document.getElementById('question').appendChild(operand2);
 document.getElementById('question').innerHTML += ' = ';
 
 // //Make enter button perform same task as next button
-//refresh game 
+//refresh game
 function refresh() {
-   window.location.reload('Refresh');
- }
+  window.location.reload('Refresh');
+}
