@@ -24,7 +24,7 @@ Arithmetic Game tests your mental math skills under time pressure. Can you solve
 
 ## 🚀 Try the Game
 
-You can try **Arithmetic Game** by opening the `index.html` file in your browser / https://mathwizz.netlify.app/
+You can try **Arithmetic Game** by opening the `index.html` file in your browser or  https://mathwizz.netlify.app/
 
 ## ⭐ Features
 
